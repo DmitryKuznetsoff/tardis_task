@@ -18,7 +18,7 @@ async def get_page_data(link: str) -> str:
 
 
 def count_tags(data: str, tags: list[str] = ()) -> Counter:
-    soup = BeautifulSoup(data)
+    soup = BeautifulSoup(data, 'html.parser')
     page_tags = (t.name for t in soup.findAll(tags))
     tags_counter = Counter(page_tags)
     return tags_counter
@@ -33,7 +33,7 @@ def validate_url(url: str) -> str:
     return url
 
 
-def validate_phone_number(phone_number: str) -> str:
+def sanitize_phone_number(phone_number: str) -> str:
     """
     simple phone number validation
     """

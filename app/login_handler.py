@@ -1,6 +1,6 @@
 from flask import request, jsonify
 from . import app, init_redis
-from .utils import validate_phone_number, generate_code
+from .utils import sanitize_phone_number, generate_code
 
 redis = init_redis()
 
@@ -9,7 +9,7 @@ redis = init_redis()
 def get_login():
     phone = request.args.get('phone')
     if phone:
-        validated_phone_number = validate_phone_number(phone)
+        validated_phone_number = sanitize_phone_number(phone)
         code = generate_code()
         redis.set(validated_phone_number, code)
         return jsonify({'code': code})
@@ -29,7 +29,7 @@ def post_login():
     except AttributeError:
         jsonify({'error': 'code is required'})
 
-    validated_phone_number = validate_phone_number(phone)
+    validated_phone_number = sanitize_phone_number(phone)
     if redis.get(validated_phone_number).decode() == code:
         return jsonify({'status': 'OK'})
     return jsonify({'status': 'Fail'})

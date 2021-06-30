@@ -5,10 +5,6 @@ from .utils import get_page_data, count_tags, validate_url
 DEFAULT_LINK = 'http://freestylo.ru/'
 
 
-def filter_by_tags(tags, data):
-    return (t for t in data if t in tags)
-
-
 @app.get('/structure')
 async def get_structure():
     link = request.args.get('link')
