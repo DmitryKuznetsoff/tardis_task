@@ -1,5 +1,5 @@
 beautifulsoup4==4.9.3
-Flask==2.0.1
+Flask[async]==2.0.1
 httpx==0.18.2
 pytest-flask==1.2.0
 redis==3.5.3

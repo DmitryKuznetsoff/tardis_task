@@ -9,7 +9,6 @@ COPY . /usr/src/app
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-RUN pip install flask[async]
 CMD ["python", "run.py"]
 
 EXPOSE 5000:5000
