@@ -97,15 +97,11 @@
    структура `{"html": 1, "head": 1, "body": 1, "p": 2, "img": 1}` то разница будет `{"p": 2, "img": 1}`
 
 ### Запуск приложения в docker:
-1. Сборка образа:
+1. Запуск приложения в docker:
    ```shell
-   docker build -t tardis .
+   docker-compose up -d
    ```
-2. Запуск контейнера:
-   ```shell
-   docker run --name tardis -tid -p 5000:5000 tardis
-   ```
-3. Запуск тестов в контейнере:
+2. Запуск тестов в контейнере:
    ```shell
    docker exec tardis pytest
    ```

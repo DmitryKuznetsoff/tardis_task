@@ -1,8 +1,8 @@
 from flask import request, jsonify
-from . import app
+from . import app, init_redis
 from .utils import validate_phone_number, generate_code
 
-CHECK_USER_DATA = {}
+redis = init_redis()
 
 
 @app.get('/login')
@@ -11,7 +11,7 @@ def get_login():
     if phone:
         validated_phone_number = validate_phone_number(phone)
         code = generate_code()
-        CHECK_USER_DATA.update({validated_phone_number: code})
+        redis.set(validated_phone_number, code)
         return jsonify({'code': code})
     return jsonify({'error': 'phone number is required'})
 
@@ -30,6 +30,6 @@ def post_login():
         jsonify({'error': 'code is required'})
 
     validated_phone_number = validate_phone_number(phone)
-    if CHECK_USER_DATA.get(validated_phone_number) == code:
+    if redis.get(validated_phone_number).decode() == code:
         return jsonify({'status': 'OK'})
     return jsonify({'status': 'Fail'})
