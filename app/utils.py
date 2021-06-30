@@ -7,7 +7,7 @@ from httpx import AsyncClient, ConnectError
 from flask import abort
 
 
-async def get_page_data(link):
+async def get_page_data(link: str) -> str:
     client = AsyncClient()
     async with client as c:
         try:
@@ -17,14 +17,14 @@ async def get_page_data(link):
     return data.text
 
 
-def count_tags(data, tags=()):
+def count_tags(data: str, tags: list[str] = ()) -> Counter:
     soup = BeautifulSoup(data)
     page_tags = (t.name for t in soup.findAll(tags))
     tags_counter = Counter(page_tags)
     return tags_counter
 
 
-def validate_url(url: str):
+def validate_url(url: str) -> str:
     """
     simple url validation
     """
@@ -33,14 +33,14 @@ def validate_url(url: str):
     return url
 
 
-def validate_phone_number(phone_number: str):
+def validate_phone_number(phone_number: str) -> str:
     """
     simple phone number validation
     """
     return ''.join(filter(str.isdigit, phone_number))
 
 
-def generate_code(n=6):
+def generate_code(n: int = 6) -> str:
     """
     generates random code string with length n
     """
